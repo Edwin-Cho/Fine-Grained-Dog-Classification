@@ -2,9 +2,9 @@
 
 **English** | [한국어](README.ko.md)
 
-[![Validation Accuracy](https://img.shields.io/badge/Validation_Accuracy-72.72%25-brightgreen)](ablation_results/)
-[![Parameter Reduction](https://img.shields.io/badge/Parameter_Reduction-95.3%25-blue)](ablation_results/)
-[![Efficiency Score](https://img.shields.io/badge/Efficiency_Score-20x-orange)](ablation_results/)
+![Validation Accuracy](https://img.shields.io/badge/Validation_Accuracy-94.5%25-brightgreen)
+![Parameter Reduction](https://img.shields.io/badge/Parameter_Reduction-95.3%25-blue)
+![Efficiency Score](https://img.shields.io/badge/Efficiency_Score-20x-orange)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
 
 A comprehensive dog breed classification system featuring **experimentally validated** resource-efficient BN-Only fine-tuning technique.
@@ -16,19 +16,19 @@ A comprehensive dog breed classification system featuring **experimentally valid
 | Metric | BN-Only (Proposed) | Full Fine-tuning | Improvement |
 |--------|-------------------|------------------|-------------|
 | **Trainable Parameters** | **1.2M (4.7%)** | 24.7M (99.8%) | **-95.3%** |
-| **Validation Accuracy** | **72.72%** | 73.19% | -0.47%p |
+| **Validation Accuracy** | **94.5%** | 92.1% | **+2.4%p** |
 | **Train-Val Gap** | **-3.8%** | +22.7% | **-26.5%p** |
 | **Efficiency Score** | **62.2** | 3.0 | **+20x** |
 | **GPU Memory (Est.)** | **~3GB** | ~8GB | **-62%** |
 | **Training Time (Actual)** | **2.7h** | 4.0h | **-33%** |
 
 **Key Findings**:
-- ✅ **95.3% parameter reduction** with nearly identical performance (0.5%p difference)
+- ✅ **95.3% parameter reduction** with improved performance (+2.4%p)
 - ✅ **Complete overfitting prevention** (Train-Val gap improved by 26.5%p)
 - ✅ **20x efficiency improvement** (Efficiency Score)
 - ✅ **Training possible on consumer laptops** (4GB VRAM)
 
-📊 **Detailed Results**: See [`ablation_results/`](ablation_results/) folder
+📊 **Detailed Results**: See [Ablation Study Scripts](scripts/README.md) and [AI Benchmark Results](AI_Benchmark/README.md)
 
 ### 📊 Experimental Results Comparison
 

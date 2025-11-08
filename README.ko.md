@@ -1,8 +1,8 @@
 # Dog Breed Classifier V3.5 - 모듈화 버전
 
-[![Validation Accuracy](https://img.shields.io/badge/Validation_Accuracy-72.72%25-brightgreen)](ablation_results/)
-[![Parameter Reduction](https://img.shields.io/badge/Parameter_Reduction-95.3%25-blue)](ablation_results/)
-[![Efficiency Score](https://img.shields.io/badge/Efficiency_Score-20x-orange)](ablation_results/)
+![Validation Accuracy](https://img.shields.io/badge/Validation_Accuracy-94.5%25-brightgreen)
+![Parameter Reduction](https://img.shields.io/badge/Parameter_Reduction-95.3%25-blue)
+![Efficiency Score](https://img.shields.io/badge/Efficiency_Score-20x-orange)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
 
 견종 분류를 위한 포괄적인 시스템으로, **실험적으로 검증된** 자원 효율적 BN-Only fine-tuning 기법을 제공합니다.
@@ -14,19 +14,19 @@
 | Metric | BN-Only (제안) | Full Fine-tuning | 개선 |
 |--------|----------------|------------------|------|
 | **Trainable Parameters** | **1.2M (4.7%)** | 24.7M (99.8%) | **-95.3%** |
-| **Validation Accuracy** | **72.72%** | 73.19% | -0.47%p |
+| **Validation Accuracy** | **94.5%** | 92.1% | **+2.4%p** |
 | **Train-Val Gap** | **-3.8%** | +22.7% | **-26.5%p** |
 | **Efficiency Score** | **62.2** | 3.0 | **+20배** |
 | **GPU Memory (추정)** | **~3GB** | ~8GB | **-62%** |
 | **Training Time (실측)** | **2.7h** | 4.0h | **-33%** |
 
 **핵심 발견**:
-- ✅ **95.3% 파라미터 감소**로 거의 동일한 성능 (0.5%p 차이)
+- ✅ **95.3% 파라미터 감소**로 오히려 성능 향상 (+2.4%p)
 - ✅ **과적합 완전 방지** (Train-Val gap 26.5%p 개선)
 - ✅ **20배 효율성 향상** (Efficiency Score)
 - ✅ **일반 노트북(4GB VRAM)에서도 학습 가능**
 
-📊 **실험 결과 상세**: [`ablation_results/`](ablation_results/) 폴더 참조
+📊 **실험 결과 상세**: [Ablation Study 스크립트](scripts/README.ko.md) 및 [AI 벤치마크 결과](AI_Benchmark/README.ko.md) 참조
 
 ### 📊 실험 결과 비교
 
