@@ -9,6 +9,7 @@ from .model import (
     load_pretrained_model,
     load_model_and_classes,
     create_custom_model,
+    create_custom_model_bn_only,
     save_model_and_classes,
     get_model_summary
 )
@@ -38,6 +39,7 @@ __all__ = [
     'load_pretrained_model',
     'load_model_and_classes',
     'create_custom_model',
+    'create_custom_model_bn_only',
     'save_model_and_classes',
     'get_model_summary',
     

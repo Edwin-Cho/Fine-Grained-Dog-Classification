@@ -28,6 +28,9 @@ models/
 dataset/
 data/
 
+# Large Dataset (Download separately)
+Dataset_Stanford/
+
 # Logs
 *.log
 logs/
