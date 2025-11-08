@@ -32,7 +32,7 @@ A comprehensive dog breed classification system featuring **experimentally valid
 
 ### 📊 Experimental Results Comparison
 
-![BN-Only vs Full FT Comparison](ablation_results/bn_vs_full_comparison.png)
+![BN-Only vs Full FT Comparison](AI_Benchmark/ablation_results/bn_vs_full_comparison.png)
 
 *Figure: Comparison of 4 key metrics between BN-Only and Full Fine-tuning*
 

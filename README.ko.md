@@ -30,7 +30,7 @@
 
 ### 📊 실험 결과 비교
 
-![BN-Only vs Full FT Comparison](ablation_results/bn_vs_full_comparison.png)
+![BN-Only vs Full FT Comparison](AI_Benchmark/ablation_results/bn_vs_full_comparison.png)
 
 *그림: BN-Only와 Full Fine-tuning의 4가지 핵심 지표 비교*
 
