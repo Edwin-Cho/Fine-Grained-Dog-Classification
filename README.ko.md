@@ -7,6 +7,17 @@
 
 견종 분류를 위한 포괄적인 시스템으로, **실험적으로 검증된** 자원 효율적 BN-Only fine-tuning 기법을 제공합니다.
 
+## 📌 프로젝트 배경
+
+이 저장소는 가천대학교 졸업 캡스톤 프로젝트(2025.03–06)인
+[ComeBackHome](https://github.com/zivro-team/ComeBackHome-backend-ai)
+(유기견 매칭 플랫폼)에서 **AI 모델 최적화 파트만 별도 분리**한 것입니다.
+
+전체 시스템에는 FastAPI 기반 실시간 견종 매칭, ResNet50 2048차원 특성 추출을 이용한
+유사도 검색, 웹 클라이언트가 포함되어 있습니다.
+**이 레포는 BN-Only fine-tuning 연구에 집중**하며,
+학습 파라미터를 95.3% 줄이면서 일반 GPU(4GB VRAM)에서도 학습이 가능함을 검증합니다.
+
 ## ⚡ 핵심 성과 (실험 검증 완료)
 
 ### 🔥 BN-Only Fine-tuning 효과 (실측 결과)
@@ -149,7 +160,7 @@ Fine-Grained-Dog-Classification/
 
 ### 단계 1: 저장소 복제
 ```bash
-git clone https://github.com/YOUR_USERNAME/Fine-Grained-Dog-Classification.git
+git clone https://github.com/Edwin-Cho/Fine-Grained-Dog-Classification.git
 cd Fine-Grained-Dog-Classification
 ```
 

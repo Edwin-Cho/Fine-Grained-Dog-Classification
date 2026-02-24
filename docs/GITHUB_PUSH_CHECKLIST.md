@@ -18,7 +18,7 @@ Check `.gitignore` includes:
 
 ### 3. Code Quality
 - [x] All scripts use relative paths or environment variables
-- [x] No absolute paths like `/Users/edwinrcho/...`
+- [x] No absolute paths (e.g., `/Users/...`)
 - [x] All Python scripts have proper docstrings
 - [x] Comments in English
 
@@ -58,7 +58,7 @@ These should be excluded by `.gitignore`:
 
 ### Initial Setup
 ```bash
-cd /Users/edwinrcho/Desktop/SA/ResNet_Opt/Fine-Grained-Dog-Classification
+cd Fine-Grained-Dog-Classification
 
 # Check git status
 git status
@@ -101,7 +101,7 @@ git commit -m "feat: Add BN-Only fine-tuning with ablation study results
 ### Push to GitHub
 ```bash
 # Add remote (first time only)
-git remote add origin https://github.com/YOUR_USERNAME/Fine-Grained-Dog-Classification.git
+git remote add origin https://github.com/Edwin-Cho/Fine-Grained-Dog-Classification.git
 
 # Push
 git push -u origin main
@@ -161,7 +161,7 @@ After push, verify on GitHub:
 ### Issue: "fatal: remote origin already exists"
 ```bash
 git remote remove origin
-git remote add origin https://github.com/YOUR_USERNAME/Fine-Grained-Dog-Classification.git
+git remote add origin https://github.com/Edwin-Cho/Fine-Grained-Dog-Classification.git
 ```
 
 ### Issue: "Repository size too large"

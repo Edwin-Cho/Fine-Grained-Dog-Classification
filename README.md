@@ -9,6 +9,18 @@
 
 A comprehensive dog breed classification system featuring **experimentally validated** resource-efficient BN-Only fine-tuning technique.
 
+## 📌 Project Context
+
+This repository is the **AI model optimization component** extracted from
+[ComeBackHome](https://github.com/zivro-team/ComeBackHome-backend-ai) —
+a graduation capstone project at Gachon University (March–June 2025) for building
+a missing dog matching platform.
+
+The full system included FastAPI-based real-time breed matching, 2048-dim ResNet50
+feature extraction for similarity search, and a web client interface.
+**This repo focuses specifically on the BN-Only fine-tuning research**,
+which reduced trainable parameters by 95.3% while enabling training on consumer GPUs (4GB VRAM).
+
 ## ⚡ Key Achievements (Experimentally Validated)
 
 ### 🔥 BN-Only Fine-tuning Results (Actual Measurements)
@@ -151,7 +163,7 @@ Fine-Grained-Dog-Classification/
 
 ### Step 1: Clone Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/Fine-Grained-Dog-Classification.git
+git clone https://github.com/Edwin-Cho/Fine-Grained-Dog-Classification.git
 cd Fine-Grained-Dog-Classification
 ```
 
