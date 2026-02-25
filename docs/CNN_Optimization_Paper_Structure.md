@@ -5,6 +5,7 @@
 ---
 
 > **핵심 기여**: ResNet50의 BN 레이어만 재학습하여 파라미터 95% 감소, 메모리 70% 절감, 시간 60% 단축하면서도 정확도 유지/향상
+> (실측 지표/정의는 `README.md` 및 `AI_Benchmark/ablation_results/bn_only/` 아티팩트 기준으로 확인)
 
 ---
 
@@ -21,10 +22,10 @@
 ## Abstract {#abstract}
 
 ### 한국어
-본 연구는 자원 제약 환경에서 효율적인 CNN fine-tuning 기법을 제시한다. **ResNet50의 Batch Normalization 레이어만 선택적으로 재학습**하는 전략을 통해, Stanford Dogs 데이터셋(120견종)에서 학습 파라미터를 95% 감소(24.7M→1.2M)시키고 GPU 메모리를 70% 절감(7.8GB→2.8GB)하면서도, **94.5% Top-1 정확도**를 달성하였다. 이는 일반적인 full fine-tuning(92.1%)보다 2.4% 높으며, 학습 시간은 60% 단축(6.5h→2.6h)되었다. BN 레이어의 domain-specific statistics 학습이 feature extractor는 유지하면서 효과적인 domain adaptation을 가능하게 함을 실증하였다. 본 기법은 일반 노트북(GTX 1650, 4GB VRAM) 환경에서도 최신 모델 학습을 가능하게 한다.
+본 연구는 자원 제약 환경에서 효율적인 CNN fine-tuning 기법을 제시한다. **ResNet50의 Batch Normalization 레이어만 선택적으로 재학습**하는 전략을 통해, 학습 파라미터/메모리/시간을 크게 절감하면서도 성능을 유지하는 방향을 논의한다. 본 레포에서의 실측 지표 및 지표 정의(Overall vs Top-25)는 `README.md` 및 `AI_Benchmark/ablation_results/bn_only/`에 커밋된 근거 아티팩트를 기준으로 확인한다.
 
 ### English
-This study presents a resource-efficient CNN fine-tuning technique for constrained computing environments. By **selectively retraining only Batch Normalization layers** in ResNet50, we reduce trainable parameters by 95% (24.7M→1.2M) and GPU memory by 70% (7.8GB→2.8GB), while achieving **94.5% Top-1 accuracy** on Stanford Dogs dataset (120 breeds). This outperforms standard full fine-tuning (92.1%) by 2.4% with 60% faster training time (6.5h→2.6h). We demonstrate that learning domain-specific statistics in BN layers enables effective domain adaptation while preserving pretrained feature extractors. This technique enables training state-of-the-art models on consumer-grade laptops (GTX 1650, 4GB VRAM).
+This study presents a resource-efficient CNN fine-tuning technique for constrained computing environments. By **selectively retraining only Batch Normalization layers** in ResNet50, we aim to reduce trainable parameters, GPU memory, and training time while maintaining model performance. For measured results and metric definitions (overall vs Top-25), refer to the evidence artifacts committed in `README.md` and `AI_Benchmark/ablation_results/bn_only/`.
 
 **Keywords**: CNN Optimization, Batch Normalization, Fine-tuning, Resource Efficiency, Fine-Grained Classification, Domain Adaptation
 
@@ -320,8 +321,8 @@ Improvement: 62.2 / 3.0 = 20.7배
 3. **BN이 Domain Adaptation 수행**: μ, σ 학습으로 새 도메인에 맞게 정규화
 
 #### 실증적 증거
-- Full Fine-tuning (92.1%) < BN-Only (94.5%) → **과적합 방지 효과**
-- BN retraining 제거 시 -5.3% 하락 → **BN의 중요성 입증**
+- (참고) 과거 초안에서 사용하던 수치가 포함되어 있을 수 있습니다.
+- 본 레포의 실측 지표는 `README.md` 및 `AI_Benchmark/ablation_results/bn_only/`의 아티팩트를 기준으로 확인하세요.
 
 ### 4.2 자원 제약 환경에 대한 함의
 
@@ -365,7 +366,7 @@ Improvement: 62.2 / 3.0 = 20.7배
 - 학습 파라미터 **95% 감소** (24.7M → 1.2M)
 - GPU 메모리 **70% 절감** (7.8GB → 2.8GB)
 - 학습 시간 **60% 단축** (6.5h → 2.6h)
-- 정확도 **유지/향상** (92.1% → 94.5%)
+- 정확도는 지표 정의(Overall vs Top-25)에 따라 달라질 수 있으므로, `README.md` 및 근거 아티팩트 기준으로 보고
 
 ### 주요 기여
 
@@ -562,7 +563,7 @@ class Config:
 
 | Metric | Full FT | Top Layers | **BN-Only 🔥** |
 |--------|---------|------------|---------------|
-| **Top-1 Accuracy** | 92.1% | 94.8% | **94.5%** |
+| **Top-1 Accuracy** | TBD | TBD | TBD |
 | **Top-5 Accuracy** | 99.1% | 99.9% | **99.8%** |
 | **Mean F1-Score** | 0.915 | 0.942 | **0.938** |
 | **Trainable Params** | 24.7M (100%) | 11.5M (46%) | **1.2M (5%)** |
@@ -608,7 +609,8 @@ history = model.fit(
     callbacks=[...]  # EarlyStopping, ReduceLROnPlateau
 )
 
-# 결과: 94.5% 정확도, 2.8GB 메모리, 2.6h 학습
+# 결과: 지표/환경에 따라 상이할 수 있음 (자세한 실측 수치는 `README.md` 및 `AI_Benchmark/ablation_results/bn_only/` 참고)
+# 결과 지표는 `README.md` 및 `AI_Benchmark/ablation_results/bn_only/` 근거 아티팩트 기준으로 확인
 ```
 
 ---
@@ -618,5 +620,5 @@ history = model.fit(
 **핵심 메시지**: 
 > 🔥 **BN-Only Fine-tuning으로 일반 노트북에서도 최신 모델을 학습하세요!**
 > - 95% 파라미터 감소 → 자원 효율성
-> - 94.5% 정확도 → 성능 유지
+> - 실측 지표와 근거 아티팩트를 함께 공개 → 해석 가능성 확보
 > - 일반화 가능 → 다른 도메인에도 적용

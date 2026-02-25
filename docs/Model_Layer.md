@@ -436,7 +436,7 @@ print(f"Confidence: {confidence:.2%}")
 | **자원 효율성** | 학습 파라미터 95.3% 감소 (24.7M → 1.2M) |
 | **메모리 절약** | GPU 메모리 62.5% 감소 (~8GB → ~3GB) |
 | **학습 속도** | 학습 시간 32.5% 단축 (4.0h → 2.7h) |
-| **성능 유지** | 정확도 유지 또는 향상 (94.5%) |
+| **성능 보고** | 전체 Val Acc(122 classes) 72.63%, Top-25 macro acc 78.76% (근거: `AI_Benchmark/ablation_results/bn_only/`) |
 | **Domain Adaptation** | BN 통계 조정으로 새 도메인 적응 |
 
 ### 9.2 실용적 가치
