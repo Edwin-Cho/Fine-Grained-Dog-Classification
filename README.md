@@ -2,7 +2,8 @@
 
 **English** | [한국어](README.ko.md)
 
-![Validation Accuracy](https://img.shields.io/badge/Validation_Accuracy-94.5%25-brightgreen)
+![Overall Val Accuracy (122 classes)](https://img.shields.io/badge/Overall_Val_Accuracy_(122_classes)-72.63%25-brightgreen)
+![Top--25 Macro Accuracy](https://img.shields.io/badge/Top--25_Macro_Accuracy-78.76%25-green)
 ![Parameter Reduction](https://img.shields.io/badge/Parameter_Reduction-95.3%25-blue)
 ![Efficiency Score](https://img.shields.io/badge/Efficiency_Score-20x-orange)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
@@ -25,20 +26,31 @@ which reduced trainable parameters by 95.3% while enabling training on consumer 
 
 ### 🔥 BN-Only Fine-tuning Results (Actual Measurements)
 
+**Metric definition & evidence (BN-only)**:
+- **[Overall validation accuracy (122 classes)]**: `72.63%` (see `AI_Benchmark/ablation_results/bn_only/results.npy`)
+- **[Top-25 macro accuracy]**: `78.76%` (see `AI_Benchmark/ablation_results/bn_only/top25_metrics.json`)
+- **[Top-25 + OTHER confusion matrices]**:
+  - `AI_Benchmark/ablation_results/bn_only/confusion_matrix_top25.npy`
+  - `AI_Benchmark/ablation_results/bn_only/confusion_matrix_top25.png`
+  - `AI_Benchmark/ablation_results/bn_only/normalized_confusion_matrix_top25.png`
+- **[Raw predictions]**:
+  - `AI_Benchmark/ablation_results/bn_only/y_true.npy`
+  - `AI_Benchmark/ablation_results/bn_only/y_pred.npy`
+
 | Metric | BN-Only (Proposed) | Full Fine-tuning | Improvement |
 |--------|-------------------|------------------|-------------|
 | **Trainable Parameters** | **1.2M (4.7%)** | 24.7M (99.8%) | **-95.3%** |
-| **Validation Accuracy** | **94.5%** | 92.1% | **+2.4%p** |
+| **Overall Val Accuracy (122 classes)** | **72.63%** | TBD | TBD |
+| **Top-25 Macro Accuracy** | **78.76%** | TBD | TBD |
 | **Train-Val Gap** | **-3.8%** | +22.7% | **-26.5%p** |
 | **Efficiency Score** | **62.2** | 3.0 | **+20x** |
 | **GPU Memory (Est.)** | **~3GB** | ~8GB | **-62%** |
 | **Training Time (Actual)** | **2.7h** | 4.0h | **-33%** |
 
 **Key Findings**:
-- ✅ **95.3% parameter reduction** with improved performance (+2.4%p)
-- ✅ **Complete overfitting prevention** (Train-Val gap improved by 26.5%p)
-- ✅ **20x efficiency improvement** (Efficiency Score)
-- ✅ **Training possible on consumer laptops** (4GB VRAM)
+- ✅ **95.3% trainable parameter reduction** (BN-only fine-tuning)
+- ✅ **Reproducible evidence artifacts committed** (JSON/NPY/PNG in `AI_Benchmark/ablation_results/bn_only/`)
+- ✅ **Transparent reporting** of both overall validation accuracy (122 classes) and Top-25 macro accuracy
 
 📊 **Detailed Results**: See [Ablation Study Scripts](scripts/README.md) and [AI Benchmark Results](AI_Benchmark/README.md)
 
@@ -59,7 +71,6 @@ which reduced trainable parameters by 95.3% while enabling training on consumer 
   - 62% reduction in GPU memory usage (~8GB → ~3GB) ✅
   - 33% faster training time (4.0h → 2.7h) ✅
   - Overfitting prevention (Train-Val gap -3.8%) ✅
-- **Mixed Breed Detection**: Advanced algorithms to detect and analyze mixed breeds
 - **Confidence Analysis**: Automatic confidence level assessment with recommendations
 - **Batch Processing**: Support for multiple image predictions
 
@@ -285,9 +296,7 @@ model = create_custom_model(num_classes=120)
 - **Learning Rate Reduction**: Factor 0.1 with patience 3
 
 ### Performance Features
-- **Mixed Breed Detection**: Multiple algorithms including entropy analysis
-- **Confidence Thresholds**: High (70%), Medium (40%), Low (<40%)
-- **Automatic Recommendations**: Suggests re-photographing for low confidence
+
 
 ## 🔧 Configuration
 
@@ -320,12 +329,6 @@ Customize logging in `config/logging_config.py`:
 - Format: Timestamp, level, function name, message
 
 ## 📈 Advanced Features
-
-### Mixed Breed Analysis
-The system uses multiple detection methods:
-1. **Threshold-based**: Analyzes probability differences
-2. **Entropy-based**: Measures prediction uncertainty
-3. **Multi-breed detection**: Identifies complex mixes
 
 ### Model Interpretability
 - **GradCAM**: Visualizes important image regions

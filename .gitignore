@@ -28,6 +28,13 @@ models/
 dataset/
 data/
 
+# Evidence artifacts (allowlist)
+!AI_Benchmark/ablation_results/**/results.npy
+!AI_Benchmark/ablation_results/**/confusion_matrix_top25.npy
+!AI_Benchmark/ablation_results/**/y_true.npy
+!AI_Benchmark/ablation_results/**/y_pred.npy
+!AI_Benchmark/ablation_results/**/class_names.npy
+
 # Large Dataset (Download separately)
 Dataset_Stanford/
 

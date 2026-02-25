@@ -1,6 +1,7 @@
 # Dog Breed Classifier V3.5 - 모듈화 버전
 
-![Validation Accuracy](https://img.shields.io/badge/Validation_Accuracy-94.5%25-brightgreen)
+![Overall Val Accuracy (122 classes)](https://img.shields.io/badge/Overall_Val_Accuracy_(122_classes)-72.63%25-brightgreen)
+![Top--25 Macro Accuracy](https://img.shields.io/badge/Top--25_Macro_Accuracy-78.76%25-green)
 ![Parameter Reduction](https://img.shields.io/badge/Parameter_Reduction-95.3%25-blue)
 ![Efficiency Score](https://img.shields.io/badge/Efficiency_Score-20x-orange)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
@@ -22,20 +23,31 @@
 
 ### 🔥 BN-Only Fine-tuning 효과 (실측 결과)
 
+**지표 정의 및 근거 자료 (BN-only)**:
+- **[전체 검증 정확도 (122 classes)]**: `72.63%` (근거: `AI_Benchmark/ablation_results/bn_only/results.npy`)
+- **[Top-25 macro accuracy]**: `78.76%` (근거: `AI_Benchmark/ablation_results/bn_only/top25_metrics.json`)
+- **[Top-25 + OTHER 혼동 행렬]**:
+  - `AI_Benchmark/ablation_results/bn_only/confusion_matrix_top25.npy`
+  - `AI_Benchmark/ablation_results/bn_only/confusion_matrix_top25.png`
+  - `AI_Benchmark/ablation_results/bn_only/normalized_confusion_matrix_top25.png`
+- **[원시 예측 결과]**:
+  - `AI_Benchmark/ablation_results/bn_only/y_true.npy`
+  - `AI_Benchmark/ablation_results/bn_only/y_pred.npy`
+
 | Metric | BN-Only (제안) | Full Fine-tuning | 개선 |
 |--------|----------------|------------------|------|
 | **Trainable Parameters** | **1.2M (4.7%)** | 24.7M (99.8%) | **-95.3%** |
-| **Validation Accuracy** | **94.5%** | 92.1% | **+2.4%p** |
+| **전체 Val Accuracy (122 classes)** | **72.63%** | TBD | TBD |
+| **Top-25 Macro Accuracy** | **78.76%** | TBD | TBD |
 | **Train-Val Gap** | **-3.8%** | +22.7% | **-26.5%p** |
 | **Efficiency Score** | **62.2** | 3.0 | **+20배** |
 | **GPU Memory (추정)** | **~3GB** | ~8GB | **-62%** |
 | **Training Time (실측)** | **2.7h** | 4.0h | **-33%** |
 
 **핵심 발견**:
-- ✅ **95.3% 파라미터 감소**로 오히려 성능 향상 (+2.4%p)
-- ✅ **과적합 완전 방지** (Train-Val gap 26.5%p 개선)
-- ✅ **20배 효율성 향상** (Efficiency Score)
-- ✅ **일반 노트북(4GB VRAM)에서도 학습 가능**
+- ✅ **학습 파라미터 95.3% 감소** (BN-only fine-tuning)
+- ✅ **재현 가능한 근거 아티팩트 저장** (`AI_Benchmark/ablation_results/bn_only/`의 JSON/NPY/PNG)
+- ✅ **전체 검증 정확도(122 classes)와 Top-25 macro accuracy를 함께 공개**하여 해석 가능성 확보
 
 📊 **실험 결과 상세**: [Ablation Study 스크립트](scripts/README.ko.md) 및 [AI 벤치마크 결과](AI_Benchmark/README.ko.md) 참조
 
@@ -56,7 +68,6 @@
   - GPU 메모리 62% 절감 (~8GB → ~3GB) ✅
   - 학습 시간 33% 단축 (4.0h → 2.7h) ✅
   - 과적합 방지 효과 (Train-Val gap -3.8%) ✅
-- **믹스견 감지**: 믹스견을 감지하고 분석하는 고급 알고리즘
 - **신뢰도 분석**: 자동 신뢰도 수준 평가 및 권장사항 제공
 - **배치 처리**: 다중 이미지 예측 지원
 
@@ -282,9 +293,7 @@ model = create_custom_model(num_classes=120)
 - **학습률 감소**: 0.1 factor, 3 patience
 
 ### 성능 기능
-- **믹스견 감지**: 엔트로피 분석을 포함한 다중 알고리즘
-- **신뢰도 임계값**: 높음 (70%), 중간 (40%), 낮음 (<40%)
-- **자동 권장사항**: 낮은 신뢰도에 대해 재촬영 제안
+
 
 ## 🔧 설정
 
@@ -317,12 +326,6 @@ class Config:
 - 형식: 타임스탬프, 레벨, 함수명, 메시지
 
 ## 📈 고급 기능
-
-### 믹스견 분석
-시스템은 다중 감지 방법을 사용합니다:
-1. **임계값 기반**: 확률 차이 분석
-2. **엔트로피 기반**: 예측 불확실성 측정
-3. **다중 견종 감지**: 복잡한 믹스 식별
 
 ### 모델 해석성
 - **GradCAM**: 중요한 이미지 영역 시각화

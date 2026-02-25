@@ -1,0 +1,8 @@
+{
+  "metric": "top25_macro_accuracy",
+  "definition": "Macro average of per-class accuracies over top-25 frequent classes (training split frequency)",
+  "top25_macro_accuracy": 0.7876144785732968,
+  "top25_macro_accuracy_percent": 78.76144785732969,
+  "num_top_classes": 25,
+  "val_samples": 4106
+}
