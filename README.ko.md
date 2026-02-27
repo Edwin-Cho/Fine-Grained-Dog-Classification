@@ -19,6 +19,11 @@
 **이 레포는 BN-Only fine-tuning 연구에 집중**하며,
 학습 파라미터를 95.3% 줄이면서 일반 GPU(4GB VRAM)에서도 학습이 가능함을 검증합니다.
 
+## 📹 발표 영상
+
+- **다중 앙상블 및 메타데이터 분석을 통한 실종견 자동 매칭 시스템 연구**: [YouTube](https://youtu.be/SiTr1ALdPEc)
+- **BN-Only Fine-Tuning (KAICTS 2025)**: [YouTube](https://youtu.be/ltj9DIgVuQo)
+
 ## ⚡ 핵심 성과 (실험 검증 완료)
 
 ### 🔥 BN-Only Fine-tuning 효과 (실측 결과)
