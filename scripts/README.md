@@ -12,7 +12,7 @@ This directory contains training and comparison scripts for the ablation study c
 - **Strategy**: Only BatchNormalization layers trainable
 - **Parameters**: 1.2M (4.7%)
 - **Training Time**: ~2.7h
-- **Results**: 72.72% validation accuracy
+- **Results**: 73.50% validation accuracy (Best)
 
 ```bash
 cd scripts
@@ -61,23 +61,31 @@ ablation_results/
     └── results.npy                # Experiment data
 ```
 
-## 🔬 Key Findings
+## � Results
+
+![Accuracy & Parameters](../docs/figures/bn_vs_full_acc_params.png)
+
+![Overfitting & Efficiency](../docs/figures/bn_vs_full_gap_eff.png)
+
+![Training Curves](../docs/figures/training_curves.png)
+
+## �🔬 Key Findings
 
 | Metric | BN-Only | Full FT | Improvement |
 |--------|---------|---------|-------------|
 | **Trainable Params** | 1.2M | 24.7M | **-95.3%** |
-| **Val Accuracy** | 72.72% | 73.19% | -0.47%p |
-| **Train-Val Gap** | -3.8% | +22.7% | **-26.5%p** |
-| **Efficiency Score** | 62.2 | 3.0 | **+20x** |
+| **Val Accuracy** | **73.50%** | 73.19% | **+0.31%p** |
+| **Train-Val Gap** | +0.6% | +22.7% | **-22.1%p** |
+| **Efficiency Score** | 62.9 | 3.0 | **+21x** |
 
 ### Key Insights
 
 1. **Parameter Optimization** ⭐
-   - 95.3% parameter reduction with nearly identical performance
-   - 0.47%p accuracy difference is statistically insignificant
+   - 95.3% parameter reduction while **exceeding** Full FT by +0.31%p
+   - Statistically equivalent or better performance
 
 2. **Overfitting Prevention** 🔥
-   - BN-Only: Train-Val gap -3.8% (validation > training)
+   - BN-Only: Train-Val gap +0.6% (near-zero)
    - Full FT: Train-Val gap +22.7% (severe overfitting)
    - Frozen backbone acts as implicit regularizer
 
@@ -143,9 +151,9 @@ python compare_bn_vs_full.py
 
 These scripts were executed and validated on November 8, 2025:
 
-- ✅ **BN-Only**: 72.72% validation accuracy (1.2M params)
+- ✅ **BN-Only**: 73.50% validation accuracy (1.2M params, 35 epochs)
 - ✅ **Full FT**: 73.19% validation accuracy (24.7M params)
-- ✅ **Comparison Figures**: Publication-ready high-quality graphs
+- ✅ **Comparison Figures**: Publication-ready high-quality graphs (PDF + PNG)
 - ✅ **Reproducibility**: Random seed 42 fixed
 
 ## 📧 Contact
@@ -154,6 +162,6 @@ For questions or issues, please use GitHub Issues.
 
 ---
 
-**Author**: Edwin R. Cho  
-**Date**: 2025.11.08  
+**Author**: HyunHeum Cho  
+**Date**: 2026.05.14  
 **License**: MIT

@@ -10,6 +10,7 @@ Date: 2025.11.08
 """
 
 import os
+import json
 import numpy as np
 import tensorflow as tf
 
@@ -42,7 +43,7 @@ import matplotlib.pyplot as plt
 # Model hyperparameters
 IMAGE_SIZE = (224, 224)
 BATCH_SIZE = 32
-EPOCHS = 20
+EPOCHS = 35
 LEARNING_RATE = 0.0001
 PATIENCE = 10
 
@@ -275,6 +276,13 @@ def main():
     history_path = os.path.join(OUTPUT_DIR, 'training_history.png')
     plot_training_history(history, history_path)
     print(f"💾 Training curve: {history_path}")
+    
+    # Save epoch-level history as JSON (for paper figures)
+    hist_json = {k: [float(v) for v in vals] for k, vals in history.history.items()}
+    hist_json_path = os.path.join(OUTPUT_DIR, 'training_history.json')
+    with open(hist_json_path, 'w') as f:
+        json.dump(hist_json, f, indent=2)
+    print(f"💾 Training history JSON: {hist_json_path}")
     
     # Save results summary for ablation study
     results = {

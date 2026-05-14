@@ -12,7 +12,7 @@
 - **전략**: BatchNormalization 레이어만 학습 가능
 - **파라미터**: 1.2M (4.7%)
 - **학습 시간**: ~2.7시간
-- **결과**: 72.72% 검증 정확도
+- **결과**: 73.50% 검증 정확도 (Best)
 
 ```bash
 cd scripts
@@ -61,23 +61,31 @@ ablation_results/
     └── results.npy                # 실험 데이터
 ```
 
+## 📊 결과 요약
+
+![Accuracy & Parameters](../docs/figures/bn_vs_full_acc_params.png)
+
+![Overfitting & Efficiency](../docs/figures/bn_vs_full_gap_eff.png)
+
+![Training Curves](../docs/figures/training_curves.png)
+
 ## 🔬 핵심 발견
 
 | 지표 | BN-Only | Full FT | 개선 |
 |------|---------|---------|------|
 | **학습 파라미터** | 1.2M | 24.7M | **-95.3%** |
-| **검증 정확도** | 72.72% | 73.19% | -0.47%p |
-| **학습-검증 격차** | -3.8% | +22.7% | **-26.5%p** |
-| **효율성 점수** | 62.2 | 3.0 | **+20배** |
+| **검증 정확도** | **73.50%** | 73.19% | **+0.31%p** |
+| **학습-검증 격차** | +0.6% | +22.7% | **-22.1%p** |
+| **효율성 점수** | 62.9 | 3.0 | **+21배** |
 
 ### 주요 인사이트
 
 1. **파라미터 최적화** ⭐
-   - 95.3% 파라미터 감소로 거의 동일한 성능 달성
-   - 0.47%p 성능 차이는 통계적으로 미미
+   - 95.3% 파라미터 감소하면서 Full FT를 **+0.31%p 초과**
+   - 통계적으로 동등 이상의 성능
 
 2. **과적합 방지** 🔥
-   - BN-Only: Train-Val gap -3.8% (검증 > 학습)
+   - BN-Only: Train-Val gap +0.6% (거의 제로)
    - Full FT: Train-Val gap +22.7% (심각한 과적합)
    - Frozen backbone이 implicit regularizer 역할
 
@@ -143,9 +151,9 @@ python compare_bn_vs_full.py
 
 이 스크립트들은 2025년 11월 8일에 실제로 실행되어 검증되었습니다:
 
-- ✅ **BN-Only**: 72.72% validation accuracy (1.2M params)
+- ✅ **BN-Only**: 73.50% validation accuracy (1.2M params, 35 epochs)
 - ✅ **Full FT**: 73.19% validation accuracy (24.7M params)
-- ✅ **비교 그래프**: 논문용 고품질 그래프 생성
+- ✅ **비교 그래프**: 논문용 고품질 그래프 생성 (PDF + PNG)
 - ✅ **재현성**: Random seed 42 고정
 
 ## 📧 문의
@@ -154,6 +162,6 @@ python compare_bn_vs_full.py
 
 ---
 
-**Author**: Edwin R. Cho  
-**Date**: 2025.11.08  
+**Author**: HyunHeum Cho  
+**Date**: 2026.05.14  
 **License**: MIT
