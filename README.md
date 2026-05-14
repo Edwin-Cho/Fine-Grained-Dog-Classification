@@ -2,10 +2,10 @@
 
 **English** | [한국어](README.ko.md)
 
-![Overall Val Accuracy (122 classes)](https://img.shields.io/badge/Overall_Val_Accuracy_(122_classes)-72.63%25-brightgreen)
+![Best Val Accuracy](https://img.shields.io/badge/Best_Val_Accuracy-73.50%25-brightgreen)
 ![Top--25 Macro Accuracy](https://img.shields.io/badge/Top--25_Macro_Accuracy-78.76%25-green)
 ![Parameter Reduction](https://img.shields.io/badge/Parameter_Reduction-95.3%25-blue)
-![Efficiency Score](https://img.shields.io/badge/Efficiency_Score-20x-orange)
+![Efficiency Score](https://img.shields.io/badge/Efficiency_Score-21x-orange)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
 
 A comprehensive dog breed classification system featuring **experimentally validated** resource-efficient BN-Only fine-tuning technique.
@@ -45,25 +45,27 @@ which reduced trainable parameters by 95.3% while enabling training on consumer 
 | Metric | BN-Only (Proposed) | Full Fine-tuning | Improvement |
 |--------|-------------------|------------------|-------------|
 | **Trainable Parameters** | **1.2M (4.7%)** | 24.7M (99.8%) | **-95.3%** |
-| **Overall Val Accuracy (122 classes)** | **72.63%** | TBD | TBD |
-| **Top-25 Macro Accuracy** | **78.76%** | TBD | TBD |
-| **Train-Val Gap** | **-3.8%** | +22.7% | **-26.5%p** |
-| **Efficiency Score** | **62.2** | 3.0 | **+20x** |
+| **Best Val Accuracy** | **73.50%** | 73.19% | **+0.31%p** |
+| **Top-25 Macro Accuracy** | **78.76%** | — | — |
+| **Train-Val Gap** | **+0.6%** | +22.7% | **-22.1%p** |
+| **Efficiency Score** | **62.9** | 3.0 | **+21x** |
 | **GPU Memory (Est.)** | **~3GB** | ~8GB | **-62%** |
 | **Training Time (Actual)** | **2.7h** | 4.0h | **-33%** |
 
 **Key Findings**:
-- ✅ **95.3% trainable parameter reduction** (BN-only fine-tuning)
-- ✅ **Reproducible evidence artifacts committed** (JSON/NPY/PNG in `AI_Benchmark/ablation_results/bn_only/`)
-- ✅ **Transparent reporting** of both overall validation accuracy (122 classes) and Top-25 macro accuracy
+- ✅ **95.3% trainable parameter reduction** while **exceeding** Full FT accuracy (+0.31%p)
+- ✅ **Near-zero overfitting**: Train-Val gap +0.6% vs +22.7% for Full FT
+- ✅ **Reproducible**: training history JSON + random seed 42
 
 📊 **Detailed Results**: See [Ablation Study Scripts](scripts/README.md) and [AI Benchmark Results](AI_Benchmark/README.md)
 
 ### 📊 Experimental Results Comparison
 
-![BN-Only vs Full FT Comparison](AI_Benchmark/ablation_results/bn_vs_full_comparison.png)
+![Accuracy & Parameters](docs/figures/bn_vs_full_acc_params.png)
 
-*Figure: Comparison of 4 key metrics between BN-Only and Full Fine-tuning*
+![Overfitting & Efficiency](docs/figures/bn_vs_full_gap_eff.png)
+
+*Figure: BN-Only vs Full Fine-tuning across 4 key metrics (35-epoch results)*
 
 ---
 
@@ -75,7 +77,7 @@ which reduced trainable parameters by 95.3% while enabling training on consumer 
   - 95.3% reduction in trainable parameters (24.7M → 1.2M) ✅
   - 62% reduction in GPU memory usage (~8GB → ~3GB) ✅
   - 33% faster training time (4.0h → 2.7h) ✅
-  - Overfitting prevention (Train-Val gap -3.8%) ✅
+  - Near-zero overfitting (Train-Val gap +0.6%) ✅
 - **Confidence Analysis**: Automatic confidence level assessment with recommendations
 - **Batch Processing**: Support for multiple image predictions
 
@@ -95,7 +97,7 @@ which reduced trainable parameters by 95.3% while enabling training on consumer 
 
 ### BN-Only Fine-tuning Strategy
 
-![BN-Only Architecture](AI_Benchmark/model_visualizations/custom_architecture_diagram.png)
+![BN-Only Architecture](docs/figures/architecture.png)
 
 **Core Idea**: Freeze Convolutional layers (❄️) and train only BatchNormalization layers (🔥)
 

@@ -1,9 +1,9 @@
 # Dog Breed Classifier V3.5 - 모듈화 버전
 
-![Overall Val Accuracy (122 classes)](https://img.shields.io/badge/Overall_Val_Accuracy_(122_classes)-72.63%25-brightgreen)
+![Best Val Accuracy](https://img.shields.io/badge/Best_Val_Accuracy-73.50%25-brightgreen)
 ![Top--25 Macro Accuracy](https://img.shields.io/badge/Top--25_Macro_Accuracy-78.76%25-green)
 ![Parameter Reduction](https://img.shields.io/badge/Parameter_Reduction-95.3%25-blue)
-![Efficiency Score](https://img.shields.io/badge/Efficiency_Score-20x-orange)
+![Efficiency Score](https://img.shields.io/badge/Efficiency_Score-21x-orange)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
 
 견종 분류를 위한 포괄적인 시스템으로, **실험적으로 검증된** 자원 효율적 BN-Only fine-tuning 기법을 제공합니다.
@@ -42,25 +42,27 @@
 | Metric | BN-Only (제안) | Full Fine-tuning | 개선 |
 |--------|----------------|------------------|------|
 | **Trainable Parameters** | **1.2M (4.7%)** | 24.7M (99.8%) | **-95.3%** |
-| **전체 Val Accuracy (122 classes)** | **72.63%** | TBD | TBD |
-| **Top-25 Macro Accuracy** | **78.76%** | TBD | TBD |
-| **Train-Val Gap** | **-3.8%** | +22.7% | **-26.5%p** |
-| **Efficiency Score** | **62.2** | 3.0 | **+20배** |
+| **Best Val Accuracy** | **73.50%** | 73.19% | **+0.31%p** |
+| **Top-25 Macro Accuracy** | **78.76%** | — | — |
+| **Train-Val Gap** | **+0.6%** | +22.7% | **-22.1%p** |
+| **Efficiency Score** | **62.9** | 3.0 | **+21배** |
 | **GPU Memory (추정)** | **~3GB** | ~8GB | **-62%** |
 | **Training Time (실측)** | **2.7h** | 4.0h | **-33%** |
 
 **핵심 발견**:
-- ✅ **학습 파라미터 95.3% 감소** (BN-only fine-tuning)
-- ✅ **재현 가능한 근거 아티팩트 저장** (`AI_Benchmark/ablation_results/bn_only/`의 JSON/NPY/PNG)
-- ✅ **전체 검증 정확도(122 classes)와 Top-25 macro accuracy를 함께 공개**하여 해석 가능성 확보
+- ✅ **학습 파라미터 95.3% 감소**하면서 Full FT 정확도 **+0.31%p 초과**
+- ✅ **오버피팅 거의 제로**: Train-Val gap +0.6% vs Full FT +22.7%
+- ✅ **재현 가능**: training history JSON + random seed 42
 
 📊 **실험 결과 상세**: [Ablation Study 스크립트](scripts/README.ko.md) 및 [AI 벤치마크 결과](AI_Benchmark/README.ko.md) 참조
 
 ### 📊 실험 결과 비교
 
-![BN-Only vs Full FT Comparison](AI_Benchmark/ablation_results/bn_vs_full_comparison.png)
+![Accuracy & Parameters](docs/figures/bn_vs_full_acc_params.png)
 
-*그림: BN-Only와 Full Fine-tuning의 4가지 핵심 지표 비교*
+![Overfitting & Efficiency](docs/figures/bn_vs_full_gap_eff.png)
+
+*그림: BN-Only vs Full Fine-tuning 4가지 핵심 지표 비교 (35에포크 결과)*
 
 ---
 
@@ -72,7 +74,7 @@
   - 학습 파라미터 95.3% 감소 (24.7M → 1.2M) ✅
   - GPU 메모리 62% 절감 (~8GB → ~3GB) ✅
   - 학습 시간 33% 단축 (4.0h → 2.7h) ✅
-  - 과적합 방지 효과 (Train-Val gap -3.8%) ✅
+  - 오버피팅 거의 없음 (Train-Val gap +0.6%) ✅
 - **신뢰도 분석**: 자동 신뢰도 수준 평가 및 권장사항 제공
 - **배치 처리**: 다중 이미지 예측 지원
 
@@ -92,7 +94,7 @@
 
 ### BN-Only Fine-tuning 전략
 
-![BN-Only Architecture](AI_Benchmark/model_visualizations/custom_architecture_diagram.png)
+![BN-Only Architecture](docs/figures/architecture.png)
 
 **핵심 아이디어**: Convolutional 레이어는 동결(❄️)하고 BatchNormalization 레이어만 학습(🔥)
 
