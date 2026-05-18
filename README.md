@@ -45,16 +45,16 @@ which reduced trainable parameters by 95.3% while enabling training on consumer 
 | Metric | BN-Only (Proposed) | Full Fine-tuning | Improvement |
 |--------|-------------------|------------------|-------------|
 | **Trainable Parameters** | **1.2M (4.7%)** | 24.7M (99.8%) | **-95.3%** |
-| **Best Val Accuracy** | **73.50%** | 73.19% | **+0.31%p** |
+| **Best Val Accuracy** | **73.50%** | 73.40% | **+0.10%p** |
 | **Top-25 Macro Accuracy** | **78.76%** | — | — |
-| **Train-Val Gap** | **+0.6%** | +22.7% | **-22.1%p** |
+| **Train-Val Gap** | **+0.6%** | +23.7% | **-23.1%p** |
 | **Efficiency Score** | **62.9** | 3.0 | **+21x** |
 | **GPU Memory (Est.)** | **~3GB** | ~8GB | **-62%** |
 | **Training Time (Actual)** | **2.7h** | 4.0h | **-33%** |
 
 **Key Findings**:
-- ✅ **95.3% trainable parameter reduction** while **exceeding** Full FT accuracy (+0.31%p)
-- ✅ **Near-zero overfitting**: Train-Val gap +0.6% vs +22.7% for Full FT
+- ✅ **95.3% trainable parameter reduction** while **exceeding** Full FT accuracy (+0.10%p)
+- ✅ **Near-zero overfitting**: Train-Val gap +0.6% vs +23.7% for Full FT
 - ✅ **Reproducible**: training history JSON + random seed 42
 
 📊 **Detailed Results**: See [Ablation Study Scripts](scripts/README.md) and [AI Benchmark Results](AI_Benchmark/README.md)
@@ -119,14 +119,17 @@ Fine-Grained-Dog-Classification/
 ├── 📁 scripts/                   # Ablation Study Scripts ⭐
 │   ├── README.md / README.ko.md # Script guides
 │   ├── train_simple.py          # BN-Only training
-│   ├── train_full_finetuning.py # Full FT training
+│   ├── train_full_finetuning.py # Full FT training (35ep)
+│   ├── train_head_only.py       # Head-Only ablation baseline
 │   └── compare_bn_vs_full.py    # Results comparison
 │
 ├── 📁 ablation_results/          # Experimental Results ⭐
 │   ├── bn_vs_full_comparison.png
 │   ├── train_val_comparison.png
-│   ├── bn_only/                 # BN-Only results
-│   └── full_finetuning/         # Full FT results
+│   ├── bn_only/                 # BN-Only results (73.50%, 35ep)
+│   ├── head_only/               # Head-Only ablation (7.06%, 35ep)
+│   ├── full_finetuning/         # Full FT original results
+│   └── full_finetuning_35ep/    # Full FT 35ep results (73.40%)
 │
 ├── 📁 AI_Benchmark/              # Performance Metrics & Viz ⭐
 │   ├── README.md / README.ko.md # Benchmark guides

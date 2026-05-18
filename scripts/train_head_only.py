@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-Full Fine-tuning Training Script
+Head-Only Training Script
 
-Baseline method for ablation study. All ResNet50 layers are trainable,
-resulting in 24.7M trainable parameters (99.8% of total).
+Ablation baseline: only the classification head (GAP + BN + Dense layers)
+is trainable. The entire ResNet-50 backbone is frozen (~0.5M trainable params).
 
-Author: Edwin R. Cho
-Date: 2025.11.08
+Author: HyunHeum Cho
+Date: 2026.05.18
 """
 
 import os
@@ -47,7 +47,7 @@ PATIENCE = 10
 # Paths
 # Set DATASET_PATH environment variable or use default relative path
 DATASET_PATH = os.environ.get('DATASET_PATH', '../Dataset_Stanford/Stanford_Images')
-OUTPUT_DIR = '../ablation_results/full_finetuning_35ep'
+OUTPUT_DIR = '../ablation_results/head_only'
 
 # Data augmentation parameters
 AUGMENTATION_CONFIG = {
@@ -61,26 +61,26 @@ AUGMENTATION_CONFIG = {
 }
 
 print("="*80)
-print("🧪 ABLATION STUDY: Full Fine-tuning (Baseline)")
+print("🧪 ABLATION STUDY: Head-Only (Lower Bound)")
 print("="*80)
 print(f"📊 Configuration:")
-print(f"  - Strategy: Full Fine-tuning (All layers trainable)")
+print(f"  - Strategy: Head-Only (Backbone fully frozen)")
 print(f"  - Image size: {IMAGE_SIZE}")
 print(f"  - Batch size: {BATCH_SIZE}")
 print(f"  - Epochs: {EPOCHS}")
 print(f"  - Learning rate: {LEARNING_RATE}")
 print()
 
-def create_full_finetuning_model(num_classes: int) -> tf.keras.Model:
-    """Create Full Fine-tuning model with all layers trainable.
+def create_head_only_model(num_classes: int) -> tf.keras.Model:
+    """Create Head-Only model with backbone fully frozen.
     
     Args:
         num_classes: Number of output classes
         
     Returns:
-        Compiled Keras model with all layers trainable
+        Compiled Keras model with only classification head trainable
     """
-    print("🔨 Creating Full Fine-tuning model...")
+    print("🔨 Creating Head-Only model...")
     
     base_model = ResNet50(
         weights='imagenet',
@@ -88,10 +88,10 @@ def create_full_finetuning_model(num_classes: int) -> tf.keras.Model:
         input_shape=(*IMAGE_SIZE, 3)
     )
     
-    # Make ALL backbone layers trainable
-    base_model.trainable = True
+    # Freeze entire backbone
+    base_model.trainable = False
     
-    print(f"✅ All layers trainable")
+    print(f"✅ Backbone frozen — only classification head is trainable")
     
     # Classification head
     model = tf.keras.Sequential([
@@ -180,7 +180,7 @@ def plot_training_history(history):
     # Accuracy
     ax1.plot(history.history['accuracy'], label='Train', linewidth=2)
     ax1.plot(history.history['val_accuracy'], label='Validation', linewidth=2)
-    ax1.set_title('Full Fine-tuning - Accuracy', fontsize=14, fontweight='bold')
+    ax1.set_title('Head-Only - Accuracy', fontsize=14, fontweight='bold')
     ax1.set_ylabel('Accuracy')
     ax1.set_xlabel('Epoch')
     ax1.legend()
@@ -189,7 +189,7 @@ def plot_training_history(history):
     # Loss
     ax2.plot(history.history['loss'], label='Train', linewidth=2)
     ax2.plot(history.history['val_loss'], label='Validation', linewidth=2)
-    ax2.set_title('Full Fine-tuning - Loss', fontsize=14, fontweight='bold')
+    ax2.set_title('Head-Only - Loss', fontsize=14, fontweight='bold')
     ax2.set_ylabel('Loss')
     ax2.set_xlabel('Epoch')
     ax2.legend()
@@ -204,7 +204,7 @@ def plot_training_history(history):
 if __name__ == '__main__':
     # Create output directory
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-
+    
     # Create data generators
     train_gen, val_gen, num_classes = create_data_generators()
     
@@ -213,7 +213,7 @@ if __name__ == '__main__':
     np.save(os.path.join(OUTPUT_DIR, 'class_names.npy'), class_names)
     
     # Create model
-    model = create_full_finetuning_model(num_classes)
+    model = create_head_only_model(num_classes)
     
     # Callbacks
     callbacks = [
@@ -267,22 +267,25 @@ if __name__ == '__main__':
     print()
     
     # Save results
+    trainable_params = sum([tf.keras.backend.count_params(w) for w in model.trainable_weights])
+    total_params = sum([tf.keras.backend.count_params(w) for w in model.weights])
     results = {
-        'strategy': 'Full Fine-tuning (Upper Bound)',
+        'strategy': 'Head-Only (Lower Bound)',
         'final_train_acc': float(final_train_acc),
         'final_val_acc': float(final_val_acc),
         'best_val_acc': float(best_val_acc),
-        'trainable_params': sum([tf.keras.backend.count_params(w) for w in model.trainable_weights]),
-        'total_params': sum([tf.keras.backend.count_params(w) for w in model.weights])
+        'trainable_params': int(trainable_params),
+        'total_params': int(total_params),
+        'epochs_trained': len(history.history['accuracy'])
     }
     
     np.save(os.path.join(OUTPUT_DIR, 'results.npy'), results)
-
+    
     history_path = os.path.join(OUTPUT_DIR, 'training_history.json')
     with open(history_path, 'w') as f:
-        json.dump({k: [float(v) for v in vals] for k, vals in history.history.items()}, f, indent=2)
+        json.dump(history.history, f, indent=2)
     print(f"💾 Saved training history JSON: {history_path}")
-
+    
     # Plot
     plot_training_history(history)
     

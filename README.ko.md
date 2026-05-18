@@ -42,16 +42,16 @@
 | Metric | BN-Only (제안) | Full Fine-tuning | 개선 |
 |--------|----------------|------------------|------|
 | **Trainable Parameters** | **1.2M (4.7%)** | 24.7M (99.8%) | **-95.3%** |
-| **Best Val Accuracy** | **73.50%** | 73.19% | **+0.31%p** |
+| **Best Val Accuracy** | **73.50%** | 73.40% | **+0.10%p** |
 | **Top-25 Macro Accuracy** | **78.76%** | — | — |
-| **Train-Val Gap** | **+0.6%** | +22.7% | **-22.1%p** |
+| **Train-Val Gap** | **+0.6%** | +23.7% | **-23.1%p** |
 | **Efficiency Score** | **62.9** | 3.0 | **+21배** |
 | **GPU Memory (추정)** | **~3GB** | ~8GB | **-62%** |
 | **Training Time (실측)** | **2.7h** | 4.0h | **-33%** |
 
 **핵심 발견**:
-- ✅ **학습 파라미터 95.3% 감소**하면서 Full FT 정확도 **+0.31%p 초과**
-- ✅ **오버피팅 거의 제로**: Train-Val gap +0.6% vs Full FT +22.7%
+- ✅ **학습 파라미터 95.3% 감소**하면서 Full FT 정확도 **+0.10%p 초과**
+- ✅ **오버피팅 거의 제로**: Train-Val gap +0.6% vs Full FT +23.7%
 - ✅ **재현 가능**: training history JSON + random seed 42
 
 📊 **실험 결과 상세**: [Ablation Study 스크립트](scripts/README.ko.md) 및 [AI 벤치마크 결과](AI_Benchmark/README.ko.md) 참조
@@ -116,14 +116,17 @@ Fine-Grained-Dog-Classification/
 ├── 📁 scripts/                   # Ablation Study 스크립트 ⭐
 │   ├── README.md / README.ko.md # 스크립트 가이드
 │   ├── train_simple.py          # BN-Only 학습
-│   ├── train_full_finetuning.py # Full FT 학습
+│   ├── train_full_finetuning.py # Full FT 학습 (35ep)
+│   ├── train_head_only.py       # Head-Only ablation 베이스라인
 │   └── compare_bn_vs_full.py    # 결과 비교
 │
 ├── 📁 ablation_results/          # 실험 결과 ⭐
 │   ├── bn_vs_full_comparison.png
 │   ├── train_val_comparison.png
-│   ├── bn_only/                 # BN-Only 결과
-│   └── full_finetuning/         # Full FT 결과
+│   ├── bn_only/                 # BN-Only 결과 (73.50%, 35ep)
+│   ├── head_only/               # Head-Only ablation (7.06%, 35ep)
+│   ├── full_finetuning/         # Full FT 원본 결과
+│   └── full_finetuning_35ep/    # Full FT 35ep 결과 (73.40%)
 │
 ├── 📁 AI_Benchmark/              # 성능 지표 & 시각화 ⭐
 │   ├── README.md / README.ko.md # 벤치마크 가이드

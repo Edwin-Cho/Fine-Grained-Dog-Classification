@@ -19,11 +19,22 @@ cd scripts
 python train_simple.py
 ```
 
+#### `train_head_only.py` - Head-Only Fine-tuning (Ablation 베이스라인)
+- **전략**: 분류 head만 학습; backbone 완전 동결
+- **파라미터**: 1.1M (4.3%)
+- **학습 시간**: ~1.0시간
+- **결과**: 7.06% 검증 정확도 (BN 레이어 역할의 핵심 원인)
+
+```bash
+cd scripts
+python train_head_only.py
+```
+
 #### `train_full_finetuning.py` - Full Fine-tuning (비교 기준)
 - **전략**: 모든 레이어 학습 가능
 - **파라미터**: 24.7M (99.8%)
 - **학습 시간**: ~4.0시간
-- **결과**: 73.19% 검증 정확도
+- **결과**: 73.40% 검증 정확도 (best @ epoch 14, early stop @ epoch 24)
 
 ```bash
 cd scripts
@@ -51,14 +62,21 @@ python compare_bn_vs_full.py
 ablation_results/
 ├── bn_vs_full_comparison.png       # 메인 비교 그래프
 ├── train_val_comparison.png        # 과적합 분석
-├── bn_only/
-│   ├── bn_only_best.h5            # 학습된 모델
-│   ├── training_history.png       # 학습 곡선
-│   └── results.npy                # 실험 데이터
-└── full_finetuning/
-    ├── best_model.h5              # 학습된 모델
-    ├── training_history.png       # 학습 곡선
-    └── results.npy                # 실험 데이터
+├── bn_only/                        # BN-Only (73.50%, 35ep)
+│   ├── bn_only_best.h5
+│   ├── training_history.json
+│   └── training_history.png
+├── head_only/                      # Head-Only (7.06%, 35ep)
+│   ├── head_only_best.h5
+│   ├── training_history.json
+│   └── training_history.png
+├── full_finetuning/                # Full FT 원본
+│   ├── best_model.h5
+│   └── training_history.png
+└── full_finetuning_35ep/           # Full FT 35ep (73.40%, early stop ep24)
+    ├── best_model.h5
+    ├── training_history.json
+    └── training_history.png
 ```
 
 ## 📊 결과 요약
@@ -74,19 +92,20 @@ ablation_results/
 | 지표 | BN-Only | Full FT | 개선 |
 |------|---------|---------|------|
 | **학습 파라미터** | 1.2M | 24.7M | **-95.3%** |
-| **검증 정확도** | **73.50%** | 73.19% | **+0.31%p** |
-| **학습-검증 격차** | +0.6% | +22.7% | **-22.1%p** |
+| **검증 정확도** | **73.50%** | 73.40% | **+0.10%p** |
+| **학습-검증 격차** | +0.6% | +23.7% | **-23.1%p** |
 | **효율성 점수** | 62.9 | 3.0 | **+21배** |
 
 ### 주요 인사이트
 
 1. **파라미터 최적화** ⭐
-   - 95.3% 파라미터 감소하면서 Full FT를 **+0.31%p 초과**
+   - 95.3% 파라미터 감소하면서 Full FT를 **+0.10%p 초과**
+   - Head-Only (~1.1M params)은 7.06% 달성 — BN 레이어의 핵심 역할 확인
    - 통계적으로 동등 이상의 성능
 
 2. **과적합 방지** 🔥
    - BN-Only: Train-Val gap +0.6% (거의 제로)
-   - Full FT: Train-Val gap +22.7% (심각한 과적합)
+   - Full FT: Train-Val gap +23.7% (심각한 과적합, early stop ep24)
    - Frozen backbone이 implicit regularizer 역할
 
 3. **자원 효율성** 💡
@@ -152,7 +171,8 @@ python compare_bn_vs_full.py
 이 스크립트들은 2025년 11월 8일에 실제로 실행되어 검증되었습니다:
 
 - ✅ **BN-Only**: 73.50% validation accuracy (1.2M params, 35 epochs)
-- ✅ **Full FT**: 73.19% validation accuracy (24.7M params)
+- ✅ **Head-Only**: 7.06% validation accuracy (1.1M params, 35 epochs) — ablation 베이스라인
+- ✅ **Full FT**: 73.40% validation accuracy (24.7M params, best @ ep14, early stop @ ep24)
 - ✅ **비교 그래프**: 논문용 고품질 그래프 생성 (PDF + PNG)
 - ✅ **재현성**: Random seed 42 고정
 

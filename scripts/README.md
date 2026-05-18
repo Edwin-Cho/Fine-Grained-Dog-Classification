@@ -19,11 +19,22 @@ cd scripts
 python train_simple.py
 ```
 
+#### `train_head_only.py` - Head-Only Fine-tuning (Ablation Baseline)
+- **Strategy**: Only classification head trainable; backbone fully frozen
+- **Parameters**: 1.1M (4.3%)
+- **Training Time**: ~1.0h
+- **Results**: 7.06% validation accuracy (confirms backbone BN layers are critical)
+
+```bash
+cd scripts
+python train_head_only.py
+```
+
 #### `train_full_finetuning.py` - Full Fine-tuning (Baseline)
 - **Strategy**: All layers trainable
 - **Parameters**: 24.7M (99.8%)
 - **Training Time**: ~4.0h
-- **Results**: 73.19% validation accuracy
+- **Results**: 73.40% validation accuracy (best @ epoch 14, early stop @ epoch 24)
 
 ```bash
 cd scripts
@@ -51,14 +62,21 @@ All scripts save results to `../ablation_results/`:
 ablation_results/
 ├── bn_vs_full_comparison.png       # Main comparison figure
 ├── train_val_comparison.png        # Overfitting analysis
-├── bn_only/
-│   ├── bn_only_best.h5            # Trained model
-│   ├── training_history.png       # Learning curves
-│   └── results.npy                # Experiment data
-└── full_finetuning/
-    ├── best_model.h5              # Trained model
-    ├── training_history.png       # Learning curves
-    └── results.npy                # Experiment data
+├── bn_only/                        # BN-Only (73.50%, 35ep)
+│   ├── bn_only_best.h5
+│   ├── training_history.json
+│   └── training_history.png
+├── head_only/                      # Head-Only (7.06%, 35ep)
+│   ├── head_only_best.h5
+│   ├── training_history.json
+│   └── training_history.png
+├── full_finetuning/                # Full FT original
+│   ├── best_model.h5
+│   └── training_history.png
+└── full_finetuning_35ep/           # Full FT 35ep (73.40%, early stop ep24)
+    ├── best_model.h5
+    ├── training_history.json
+    └── training_history.png
 ```
 
 ## � Results
@@ -74,19 +92,20 @@ ablation_results/
 | Metric | BN-Only | Full FT | Improvement |
 |--------|---------|---------|-------------|
 | **Trainable Params** | 1.2M | 24.7M | **-95.3%** |
-| **Val Accuracy** | **73.50%** | 73.19% | **+0.31%p** |
-| **Train-Val Gap** | +0.6% | +22.7% | **-22.1%p** |
+| **Val Accuracy** | **73.50%** | 73.40% | **+0.10%p** |
+| **Train-Val Gap** | +0.6% | +23.7% | **-23.1%p** |
 | **Efficiency Score** | 62.9 | 3.0 | **+21x** |
 
 ### Key Insights
 
 1. **Parameter Optimization** ⭐
-   - 95.3% parameter reduction while **exceeding** Full FT by +0.31%p
+   - 95.3% parameter reduction while **exceeding** Full FT by +0.10%p
+   - Head-Only (same ~1.1M params) achieves only 7.06% — confirms BN layers are key
    - Statistically equivalent or better performance
 
 2. **Overfitting Prevention** 🔥
    - BN-Only: Train-Val gap +0.6% (near-zero)
-   - Full FT: Train-Val gap +22.7% (severe overfitting)
+   - Full FT: Train-Val gap +23.7% (severe overfitting, early stop ep24)
    - Frozen backbone acts as implicit regularizer
 
 3. **Resource Efficiency** 💡
@@ -152,7 +171,8 @@ python compare_bn_vs_full.py
 These scripts were executed and validated on November 8, 2025:
 
 - ✅ **BN-Only**: 73.50% validation accuracy (1.2M params, 35 epochs)
-- ✅ **Full FT**: 73.19% validation accuracy (24.7M params)
+- ✅ **Head-Only**: 7.06% validation accuracy (1.1M params, 35 epochs) — ablation baseline
+- ✅ **Full FT**: 73.40% validation accuracy (24.7M params, best @ ep14, early stop @ ep24)
 - ✅ **Comparison Figures**: Publication-ready high-quality graphs (PDF + PNG)
 - ✅ **Reproducibility**: Random seed 42 fixed
 
