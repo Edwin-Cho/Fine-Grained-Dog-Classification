@@ -182,6 +182,6 @@ For questions or issues, please use GitHub Issues.
 
 ---
 
-**Author**: HyunHeum Cho  
+**Author**: HyonHeum Cho  
 **Date**: 2026.05.14  
 **License**: MIT

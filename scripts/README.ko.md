@@ -182,6 +182,6 @@ python compare_bn_vs_full.py
 
 ---
 
-**Author**: HyunHeum Cho  
+**Author**: HyonHeum Cho  
 **Date**: 2026.05.14  
 **License**: MIT
