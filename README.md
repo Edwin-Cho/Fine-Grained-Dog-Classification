@@ -7,6 +7,7 @@
 ![Parameter Reduction](https://img.shields.io/badge/Parameter_Reduction-95.3%25-blue)
 ![Efficiency Score](https://img.shields.io/badge/Efficiency_Score-21x-orange)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20301203.svg)](https://doi.org/10.5281/zenodo.20301203)
 
 A comprehensive dog breed classification system featuring **experimentally validated** resource-efficient BN-Only fine-tuning technique.
 

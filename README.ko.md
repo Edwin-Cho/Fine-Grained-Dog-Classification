@@ -5,6 +5,7 @@
 ![Parameter Reduction](https://img.shields.io/badge/Parameter_Reduction-95.3%25-blue)
 ![Efficiency Score](https://img.shields.io/badge/Efficiency_Score-21x-orange)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20301203.svg)](https://doi.org/10.5281/zenodo.20301203)
 
 견종 분류를 위한 포괄적인 시스템으로, **실험적으로 검증된** 자원 효율적 BN-Only fine-tuning 기법을 제공합니다.
 
