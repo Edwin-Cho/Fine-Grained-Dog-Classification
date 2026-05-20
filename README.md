@@ -25,7 +25,6 @@ which reduced trainable parameters by 95.3% while enabling training on consumer 
 ## 📹 Presentations
 
 - **Missing Dog Auto-Matching System via Multi-Ensemble & Metadata Analysis**: [YouTube](https://youtu.be/SiTr1ALdPEc)
-- **BN-Only Fine-Tuning (KAICTS 2025)**: [YouTube](https://youtu.be/ltj9DIgVuQo)
 
 ## ⚡ Key Achievements (Experimentally Validated)
 

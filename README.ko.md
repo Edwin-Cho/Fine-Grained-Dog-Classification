@@ -22,7 +22,6 @@
 ## 📹 발표 영상
 
 - **다중 앙상블 및 메타데이터 분석을 통한 실종견 자동 매칭 시스템 연구**: [YouTube](https://youtu.be/SiTr1ALdPEc)
-- **BN-Only Fine-Tuning (KAICTS 2025)**: [YouTube](https://youtu.be/ltj9DIgVuQo)
 
 ## ⚡ 핵심 성과 (실험 검증 완료)
 
